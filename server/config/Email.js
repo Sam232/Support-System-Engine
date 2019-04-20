@@ -1,6 +1,6 @@
 const MailGun = require("mailgun-js")({
-  apiKey: "key-2bf5ab8b449e59b04ebdfdf9aa622ba1",
-  domain: "redeemertech.net"
+  apiKey: process.env.MAILGUN_API,
+  domain: process.env.MAILGUN_DOMAIN
 });
 
 const sendMail = (to, subject, html) => {
