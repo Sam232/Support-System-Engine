@@ -13,7 +13,7 @@ database();
 const app = express();
 
 //Allow Cross Domain
-app.use(allowCrossDomain());
+app.use(allowCrossDomain);
 
 //Server public directory
 app.use(express.static(path.join(__dirname, "/server/public")));
