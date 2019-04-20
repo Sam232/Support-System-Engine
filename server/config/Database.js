@@ -3,7 +3,7 @@ const ErrorLog = require("./ErrorLog");
 
 const database = () => {
   if (process.env.NODE_ENV === "production") {
-    return Mongoose.connect("mongodb://heroku_qmq4xlzl:hellohello1@ds011429.mlab.com:11429/heroku_8vphkqjm", {
+    return Mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true
     }, (error) => {
       if (error) {
@@ -14,7 +14,7 @@ const database = () => {
     });
   }
   
-  Mongoose.connect("mongodb://heroku_qmq4xlzl:hellohello1@ds011429.mlab.com:11429/heroku_8vphkqjm", {
+  Mongoose.connect("", {
     useNewUrlParser: true
   }, (error) => {
     if (error) {
