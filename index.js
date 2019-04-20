@@ -6,14 +6,14 @@ const path = require("path");
 const database = require("./server/config/Database");
 const allowCrossDomain = require("./server/config/Cors");
 
-//Allow Cross Domain
-app.use(allowCrossDomain());
-
 //Load database
 database();
  
 //Creating Express Instance
 const app = express();
+
+//Allow Cross Domain
+app.use(allowCrossDomain());
 
 //Server public directory
 app.use(express.static(path.join(__dirname, "/server/public")));
