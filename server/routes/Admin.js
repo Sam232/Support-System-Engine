@@ -353,7 +353,9 @@ router.post("/logout", protectAdminRoute, (req, res) => {
 
 //View Received User Support
 router.get("/view/received/user-support", protectAdminRoute, (req, res) => {
-  SupportMsg.find({})
+  SupportMsg.find({
+    status: "pending"
+  })
     .then(fetchedUserSupport => {
       if (fetchedUserSupport) {
         if (fetchedUserSupport.length > 0) {
