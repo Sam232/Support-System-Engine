@@ -437,7 +437,7 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                                         <div style="background-image: https://images.unsplash.com/photo-1526948531399-320e7e40f0ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80;width:100%;height:450px;position:relative;">
                                           <h2 style="text-align:center;position:absolute;margin:100px">User Support</h2>
                                         <div>
-                                        <h4 style="text-align:center">We've responsed to a user support message. Please go to the home page to view the our response. This might be a great help to you.</h4>
+                                        <h4 style="text-align:center">We've responsed to a user support message. Please go to the home page to view our response. This might be a great help to you.</h4>
                                         <p style="text-align:center">Thank you for using support system.</p>
                                       </div>
                                     `;
