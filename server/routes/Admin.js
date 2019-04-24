@@ -384,7 +384,6 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
     adminPdId: req.params.id,
     supportMsgId: req.body.supportMsgId,
     response: req.body.response,
-    private: req.query.private
   };
 
   if (!ObjectID.isValid(userSupportMsg.adminPdId)) {
