@@ -272,7 +272,7 @@ router.post("/login", (req, res) => {
       errorMsg: "Password is required"
     });
   }
-  
+
   AdminLogin.findOne({
     emailAddress: loginDetails.emailAddress
   }).populate("adminPdId")
@@ -406,16 +406,14 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                   status: "answered"
                 }
               }, {
-                new: true
-              })
+                  new: true
+                })
                 .then(response => {
-                  if(response){
+                  if (response) {
                     var userEmail = fetchedSupport.userPdId.emailAddress;
                     var subject = "Response to support message";
                     var html = `
                       <div>
-                        <div style="background-image: https://images.unsplash.com/photo-1526948531399-320e7e40f0ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80;width:100%;height:450px;position:relative;">
-                          <h2 style="text-align:center;position:absolute;margin:100px">User Support Response</h2>
                         <div>
                         <h4 style="text-align:center">We've responsed to your user support message. Please login to your dashboard to view our response.</h4>
                         <p style="text-align:center">Thank you for using support system.</p>
@@ -425,14 +423,14 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                     return sendEmail(userEmail, subject, html)
                       .then(response => {
                         if (response) {
-                          if(!fetchedSupport.private){
+                          if (!fetchedSupport.private) {
                             return UserPD.find({})
-                            .then(usersPd => {
-                              if(usersPd.length > 0){
-                                return usersPd.map(userPD => {
-                                  if(userPD.emailAddress !== userEmail){
-                                    var subject = "Daily user support";
-                                    var html = `
+                              .then(usersPd => {
+                                if (usersPd.length > 0) {
+                                  return usersPd.map(userPD => {
+                                    if (userPD.emailAddress !== userEmail) {
+                                      var subject = "Daily user support";
+                                      var html = `
                                       <div>
                                         <div style="background-image: https://images.unsplash.com/photo-1526948531399-320e7e40f0ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80;width:100%;height:450px;position:relative;">
                                           <h2 style="text-align:center;position:absolute;margin:100px">User Support</h2>
@@ -442,38 +440,38 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                                       </div>
                                     `;
 
-                                    return sendEmail(userPD.emailAddress, subject, html)
-                                    .then(response => {
-                                      if (response) {
-                                        return res.status(200).json({
-                                          msg: "Response submitted. This user and other users have been notified through email",
-                                          responseState: "Successful"
-                                        });  
-                                      }
-                                    })
-                                    .catch((error) => {
-                                      if (error) {
-                                        return res.status(500).json({
-                                          errorMsg: "Response submitted but there was an error notifying the user through email"
+                                      return sendEmail(userPD.emailAddress, subject, html)
+                                        .then(response => {
+                                          if (response) {
+                                            return res.status(200).json({
+                                              msg: "Response submitted. This user and other users have been notified through email",
+                                              responseState: "Successful"
+                                            });
+                                          }
+                                        })
+                                        .catch((error) => {
+                                          if (error) {
+                                            return res.status(500).json({
+                                              errorMsg: "Response submitted but there was an error notifying the user through email"
+                                            });
+                                          }
                                         });
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            })
-                            .catch((error) => {
-                              if (error) {
-                                return res.status(500).json({
-                                  errorMsg: "An error occured while notifying other users about the response to the new user support"
-                                });
-                              }
-                            }); 
-                          }         
+                                    }
+                                  });
+                                }
+                              })
+                              .catch((error) => {
+                                if (error) {
+                                  return res.status(500).json({
+                                    errorMsg: "An error occured while notifying other users about the response to the new user support"
+                                  });
+                                }
+                              });
+                          }
                           res.status(200).json({
                             msg: "Response submitted and the user was notified through email",
                             responseState: "Successful"
-                          });                                  
+                          });
                         }
                       })
                       .catch((error) => {
@@ -486,7 +484,7 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                   }
                   Response.findByIdAndDelete(newSupportMsg._id)
                     .then(removedResponse => {
-                      if(removedResponse){
+                      if (removedResponse) {
                         return res.status(500).json({
                           errorMsg: "An error occured, try again"
                         });
@@ -509,7 +507,7 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
                       errorMsg: "An error occured, try again"
                     });
                   }
-                });             
+                });
             }
             res.status(500).json({
               errorMsg: "An error occured, try again"
@@ -518,23 +516,23 @@ router.post("/submit/response/:id", protectAdminRoute, (req, res) => {
           .catch((error) => {
             if (error) {
               return Response.findByIdAndDelete(newSupportMsg._id)
-              .then(removedResponse => {
-                if(removedResponse){
-                  return res.status(500).json({
+                .then(removedResponse => {
+                  if (removedResponse) {
+                    return res.status(500).json({
+                      errorMsg: "An error occured, try again"
+                    });
+                  }
+                  res.status(500).json({
                     errorMsg: "An error occured, try again"
                   });
-                }
-                res.status(500).json({
-                  errorMsg: "An error occured, try again"
+                })
+                .catch((error) => {
+                  if (error) {
+                    return res.status(500).json({
+                      errorMsg: "An error occured, try again"
+                    });
+                  }
                 });
-              })
-              .catch((error) => {
-                if (error) {
-                  return res.status(500).json({
-                    errorMsg: "An error occured, try again"
-                  });
-                }
-              });
             }
           });
       }
