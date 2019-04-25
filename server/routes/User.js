@@ -871,16 +871,16 @@ router.post("/submit/user-support/", protectUserRoute, (req, res) => {
 
 //View Response To User Support Msg
 router.get("/view/user-support-response/:id", protectUserRoute, (req, res) => {
-  var userSupportId = req.params.id;
+  var supportMsgId = req.params.id;
 
-  if (!ObjectID.isValid(userSupportId)) {
+  if (!ObjectID.isValid(supportMsgId)) {
     return res.status(400).json({
-      errorMsg: "Valid UserID is required"
+      errorMsg: "Valid SupportID is required"
     });
   }
 
   Response.findOne({
-    supportMsgId: userSupportId
+    supportMsgId: supportMsgId
   })
     .populate("adminPdId")
     .populate("supportMsgId")
@@ -892,7 +892,7 @@ router.get("/view/user-support-response/:id", protectUserRoute, (req, res) => {
         });
       }
       res.status(404).json({
-        errorMsg: `No response exists for the user support with the ID ${userSupportId}`
+        errorMsg: `No response exists for the user support with the ID ${supportMsgId}`
       });
     })
     .catch((error) => {
